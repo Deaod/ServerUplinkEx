@@ -2,6 +2,10 @@ name: CI
 
 on:
   push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
 
   pull_request:
 
@@ -157,7 +161,7 @@ jobs:
         if: success() && github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          name: UT+ Preview ${{ env.PREVIEW_VER }}
+          name: ServerUplinkEx Preview ${{ env.PREVIEW_VER }}
           prerelease: true
           files: Release/${{ env.PKG_NAME }}.zip
           tag_name: ${{ env.PREVIEW_VER }}
