@@ -1,0 +1,24 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": ["Build/Temp", "//Classes"],
+		}
+	],
+	"settings":
+	{
+		"tab_size": 4,
+		"translate_tabs_to_spaces": false,
+		"default_encoding": "UTF-8",
+		"default_line_ending": "windows",
+	},
+	"build_systems":
+	[
+		{
+			"name": "Build ServerUplinkEx",
+			"file_patterns": ["*.uc"],
+			"cmd": ["$project_path/Build.bat", "silent"],
+		}
+	]
+}
