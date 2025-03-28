@@ -1,7 +1,8 @@
 # ServerUplinkEx
 
-Add the following to the list of `ServerActors`:
-`ServerActors=ServerUplinkEx_v2.ServerUplinkEx`
+Add the following to the list of `ServerActors`:  
+`ServerActors=ServerUplinkEx_v2.ServerUplinkEx`  
+This line needs to be below the `UdpServerQuery` ServerActor.
 
 Add the following to your UnrealTournament.ini:
 ```ini
