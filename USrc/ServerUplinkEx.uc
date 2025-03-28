@@ -30,7 +30,6 @@ function PreBeginPlay() {
         return;
     }
 
-    // Find a the server query handler.
     foreach AllActors(class'UdpServerQuery', Query, TargetQueryName)
         break;
 
@@ -39,7 +38,7 @@ function PreBeginPlay() {
         return;
     }
 
-    // Set heartbeat message.
+    // Precalculate heartbeat message now, since it will not change
     HeartbeatMessage = "\\heartbeat\\"$Query.Port$"\\gamename\\"$Query.GameName;
 
     MasterServersData.Insert(0, MasterServers.Length);
@@ -48,7 +47,7 @@ function PreBeginPlay() {
         if (MasterServers[i].Address == "")
             continue;
 
-        if (MasterServers[i].Port == 0)          MasterServers[i].Port = 27900;
+        if (MasterServers[i].Port == 0) MasterServers[i].Port = 27900;
 
         MasterServersData[i].Resolver = Spawn(class'Resolver');
         MasterServersData[i].Address.Port = MasterServers[i].Port;
@@ -66,28 +65,21 @@ function PreBeginPlay() {
     Log("ServerUplinkEx: Port "$UplinkPort$" successfully bound.");
 }
 
-// When master server address is resolved.
 function ResolvedAddr(int Id, IpAddr Addr) {
-    // Set the address
-    MasterServersData[Id].Address.Addr = Addr.Addr;
-
-    // Handle failure.
-    if (MasterServersData[Id].Address.Addr == 0) {
+    if (Addr.Addr == 0) {
         Log("ServerUplinkEx: Invalid master server address, aborting.");
         return;
     }
 
-    // Display success message.
+    MasterServersData[Id].Address.Addr = Addr.Addr;
+
     Log("ServerUplinkEx: Master Server is "$MasterServersData[Id].Address.Addr$":"$MasterServersData[Id].Address.Port);
 
-    // Start transmitting.
     SendHeartbeat(Id);
-    
     if (TimerRate == 0)
         SetTimer(UpdateMinutes * 60 * Level.TimeDilation, true);
 }
 
-// Host resolution failue.
 function ResolveAddrFailed(int Id) {
     Log("ServerUplinkEx: Failed to resolve master server address, aborting. ("$MasterServers[Id].Address$")");
 }
@@ -100,7 +92,6 @@ function SendHeartbeat(int Id) {
         Log("Failed to send heartbeat to master server"@MasterServers[Id].Address$":"$MasterServers[Id].Port@".");
 }
 
-// Notify the MasterServer we exist.
 function Timer() {
     local int Id;
 
@@ -109,7 +100,6 @@ function Timer() {
             SendHeartbeat(Id);
 }
 
-// Stop the uplink.
 function Halt() {
     SetTimer(0.0, false);
 }
