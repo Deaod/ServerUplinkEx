@@ -1,11 +1,11 @@
 # ServerUplinkEx
 
 Add the following to the list of `ServerActors`:
-`ServerActors=ServerUplinkEx.ServerUplinkEx`
+`ServerActors=ServerUplinkEx_v2.ServerUplinkEx`
 
 Add the following to your UnrealTournament.ini:
 ```ini
-[ServerUplinkEx.ServerUplinkEx]
+[ServerUplinkEx_v2.ServerUplinkEx]
 MasterServers=(Address="unreal.epicgames.com",Port=27900)
 UpdateMinutes=1
 ```
